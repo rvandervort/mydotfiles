@@ -1,0 +1,21 @@
+_dev() {
+	local cur prev opts
+	COMPREPLY=()
+	cur="${COMP_WORDS[COMP_CWORD]}"
+	prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+  case $prev in
+    euler)
+      opts=$(dir $HOME/Dropbox/dev/Euler/)
+      ;;
+    *)
+      opts="${!MY_PROJECTS[@]} edit_devexec euler reload"
+      ;;
+  esac
+
+
+  COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+  return 0
+}
+
+complete -F _dev dev

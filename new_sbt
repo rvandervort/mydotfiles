@@ -1,0 +1,29 @@
+#!/bin/bash
+
+new_dir="$@"
+
+echo "=================================="
+echo "Create project dir: ${new_dir}"
+echo "=================================="
+echo "Creating Directories........"
+mkdir -p ${new_dir}/src/{main,test}/{resource,scala,java}
+echo "Creating build.sbt.........."
+
+echo "
+lazy val root = (project in file(\".\")).
+  settings(
+    name := \"${new_dir}\",
+    version := \"0.0.1\",
+    scalaVersion := \"2.11.8\"
+  )
+" > $new_dir/build.sbt
+
+
+echo "Creating project/plugins.sbt.........."
+mkdir -p ${new_dir}/project
+touch ${new_dir}/project/plugins.sbt
+
+echo 'sbt.version=0.13.11' > ${new_dir}/project/build.properties
+
+
+echo "Done!"
